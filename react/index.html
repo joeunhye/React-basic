@@ -52,30 +52,91 @@
 
         // 우리가 작성한 코드 => 순수하게 실행할 수 있는 자바스크립트로 변환
         // babel 
-        const title = "스터디";
+        // const title = "스터디";
+        // ReactDOM.render(
+        //     <>
+        //     <div>
+        //         <div>
+        //             <h1>주제</h1>
+        //             <ul>
+        //                 <li>React</li>
+        //                 <li>Vue</li>
+        //             </ul>
+        //         </div>
+        //     </div>
+        //     <div>
+        //         <div>
+        //             <h1>소주제</h1>
+        //             <ul>
+        //                 <li>HTML</li>
+        //                 <li>CSS</li>
+        //                 <li>JAVASCRIPT</li>
+        //             </ul>
+        //             <p>{title}</p>
+        //         </div>
+        //     </div>
+        //     </>,
+        //     document.querySelector('#root')
+        // )
+
+        //함수형 컴포넌트
+        // function Component(props) {
+        //     return <div><h1><p>{props.massage}</p> 이것은 함수로 만든 컴포넌트입니다.</h1></div>
+        // }
+
+        //클래스형 컴포넌트
+        class Component extends React.Component {
+            //state는 항상 객체형태이어야 한다.
+            //방법 1
+            // state = {
+            //     count : 0
+            // }
+            //방법 2
+            constructor(props) {
+                super(props);
+                this.state = {count : 0};
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h1>
+                            <p>{this.props.massage}</p> 이것은 클래스로 만든 컴포넌트입니다.
+                        </h1>
+                        <p>{this.state.count}</p>
+                    </div>
+                )
+            }
+
+            componentDidMount() {
+                setTimeout(() => {
+                    // this.state.count = this.state.count + 1 -> 오류
+                    //방법 1
+                    // this.setState({ //setState() 함수가 달라진 값으로 다시 랜더하여 화면에 그려준다.
+                    //     count: this.state.count + 1
+                    // })
+                    //방법 2
+                    this.setState((previousState) => {
+                        const newState = {count:previousState.count + 1}
+                        return newState;
+                    })
+                }, 1000);
+            }
+            // 클래스에서만 사용 가능
+            static defaultProps = {
+                massage: '기본값2' 
+            }
+        }
+
+
+        // 함수, 클래스에서 사용 가능
+        // Component.defaultProps = {
+        //     massage: "기본값"
+        // }
+
         ReactDOM.render(
-            <>
-            <div>
-                <div>
-                    <h1>주제</h1>
-                    <ul>
-                        <li>React</li>
-                        <li>Vue</li>
-                    </ul>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h1>소주제</h1>
-                    <ul>
-                        <li>HTML</li>
-                        <li>CSS</li>
-                        <li>JAVASCRIPT</li>
-                    </ul>
-                    <p>{title}</p>
-                </div>
-            </div>
-            </>,
+            <Component massage="안녕하세요:)"/>,
+            // <Component />,
             document.querySelector('#root')
         )
     </script>
